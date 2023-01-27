@@ -7,6 +7,8 @@ import com.example.hexarchdemo.domain.repository.CarsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class CarServiceImpl implements CarService {
 
@@ -15,6 +17,7 @@ public class CarServiceImpl implements CarService {
     @Autowired private  CarsRepository carsRepository;
 
     @Override
+    @Transactional
     public Car createCar(String carModel, String carColor) {
         Car car = carFactory.createCar( carModel, carColor );
         car = carsRepository.saveCar( car );
