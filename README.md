@@ -1,2 +1,0 @@
-# HexagonarArchDemo
-Hexagonal Architecture example
