@@ -1,0 +1,32 @@
+spring:
+  h2:
+    console:
+      enabled: true
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect
+    hibernate.ddl-auto: update
+    properties.hibernate.format_sql: true
+    show-sql: false
+logging:
+  level:
+    com.example.hexarchdemo: DEBUG
+    ROOT: ERROR
+#   _________
+#  /   _____/_  _  _______     ____   ____   ___________
+#  \_____  \\ \/ \/ /\__  \   / ___\ / ___\_/ __ \_  __ \
+#  /        \\     /  / __ \_/ /_/  > /_/  >  ___/|  | \/
+# /_______  / \/\_/  (____  /\___  /\___  / \___  >__|
+#         \/              \//_____//_____/      \/
+swagger:
+  enable: true
+  enableTokenButton: false
+  title: "Hex example"
+  description: "Example of hex arch rest interface"

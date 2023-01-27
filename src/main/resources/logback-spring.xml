@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{ISO8601} %level class=%C{1.} %msg%n%throwable</Pattern>
+        </layout>
+    </appender>
+
+    <logger name="com.example.hexarchdemo" level="INFO" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <appender-ref ref="Console"/>
+    </logger>
+
+    <Root level="ERROR" additivity="false">
+        <appender-ref ref="Console"/>
+    </Root>
+
+</configuration>
+
