@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/cars")
@@ -33,5 +36,18 @@ public class CarsController {
     @ResponseStatus(HttpStatus.CREATED)
     public CarDTO createCar(@RequestBody(required = false) CreateCarDTO createCarDTO) {
         return carServiceAdapter.createCar( createCarDTO );
+    }
+
+    @ApiOperation( value = "Creates a new Car")
+    @RequestMapping(
+        value = "/excel",
+        produces = MediaType.APPLICATION_JSON_VALUE,
+        method = RequestMethod.POST)
+    @ApiResponses(value = {
+        @ApiResponse( code = 500, response = ExceptionDTO.class,message = SwaggerProperties.GENERIC_ERROR_DEF),
+        @ApiResponse( code = 400, response = ExceptionDTO.class, message = SwaggerProperties.BAD_REQUEST_DEF)})
+    @ResponseStatus(HttpStatus.CREATED)
+    public List<CarDTO> createCarsFromExcel(@RequestParam("file") MultipartFile file) {
+        return carServiceAdapter.createCarsFromExcel( file );
     }
 }

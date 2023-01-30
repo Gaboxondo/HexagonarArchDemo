@@ -10,6 +10,13 @@ import com.example.hexarchdemo.interfaces.restapi.model.dto.CarDTO;
 import com.example.hexarchdemo.interfaces.restapi.model.dto.CreateCarDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class CarServiceAdapterImpl implements CarServiceAdapter {
@@ -26,5 +33,17 @@ public class CarServiceAdapterImpl implements CarServiceAdapter {
         }
         Car car = carService.createCar( createCarDTO.getModel(), createCarDTO.getCarColor() );
         return carRestApiMapper.fromDomainToDTO( car );
+    }
+
+    @Override
+    public List<CarDTO> createCarsFromExcel(MultipartFile file) {
+        List<CarDTO> carsCharacteristic = carRestApiMapper.fromExcelToDTO( file );
+        List<Car> cars = new ArrayList<>();
+        for(CarDTO carDTO : carsCharacteristic){
+            Car car = carService.createCar( carDTO.getCarModel(), carDTO.getCarColor() );
+            cars.add( car );
+        }
+
+        return cars.stream().map(carRestApiMapper::fromDomainToDTO).collect( Collectors.toList());
     }
 }
