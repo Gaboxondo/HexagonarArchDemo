@@ -2,6 +2,7 @@ package com.example.hexarchdemo.interfaces.restapi.adapter.mapper;
 
 import com.example.hexarchdemo.config.exceptionhandling.model.BussinessException;
 import com.example.hexarchdemo.domain.model.Car;
+import com.example.hexarchdemo.domain.model.enums.CarModel;
 import com.example.hexarchdemo.interfaces.restapi.adapter.exception.ExcelErrorCodes;
 import com.example.hexarchdemo.interfaces.restapi.model.dto.CarDTO;
 import org.apache.poi.ss.usermodel.Cell;
@@ -58,6 +59,10 @@ public class CarRestApiMapper {
                 String cellValue = cell.getRichStringCellValue().getString();
                 if(i == 1){
                     carDTO.setCarModel(cellValue);
+                    CarModel carModel = CarModel.fromModel( cellValue );
+                    if(carModel == null){
+                        throw new BussinessException( ExcelErrorCodes.ERROR_CREATING_WORKBOOK_FROM_MULTIPART, "in row " + row.getRowNum() + " and cell " + cell.getColumnIndex() + " the car model " +  cellValue + " is not valid");
+                    }
                 } else if( i == 2){
                     carDTO.setCarColor(cellValue);
                     carDTOS.add( carDTO );
