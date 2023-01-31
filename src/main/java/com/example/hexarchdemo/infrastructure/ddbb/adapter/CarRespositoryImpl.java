@@ -24,6 +24,8 @@ public class CarRespositoryImpl implements CarsRepository {
 
     @Override
     public Car saveCar(Car car) {
+        //YOU can do things like that, but for error in the database is better to show the user just a generic
+        // for http clients is always good to control the ClientException, the ServerException and the generic one
         CarSql carSql = carSqlMapper.fromDomainToSql( car );
         try {
             carSql = carJpaReposiotry.save( carSql );
